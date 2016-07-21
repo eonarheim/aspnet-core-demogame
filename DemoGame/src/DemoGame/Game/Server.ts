@@ -12,7 +12,7 @@ interface IServerPlayer {
 var hub = $.connection.game;
 
 function connectToServer() {
-    return $.connection.hub.start(() => {
+    return $.connection.hub.start({ transport: ['webSockets'] }, () => {
         ex.Logger.getInstance().info("Connected to server", hub.connection.id);        
     });
 }

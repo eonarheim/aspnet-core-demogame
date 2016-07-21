@@ -13,7 +13,7 @@ var Resources = {
 };
 var hub = $.connection.game;
 function connectToServer() {
-    return $.connection.hub.start(function () {
+    return $.connection.hub.start({ transport: ['webSockets'] }, function () {
         ex.Logger.getInstance().info("Connected to server", hub.connection.id);
     });
 }
