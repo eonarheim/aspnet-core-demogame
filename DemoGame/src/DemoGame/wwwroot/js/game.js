@@ -47,7 +47,7 @@ function onSynch(sp) {
         onLeave(pid);
     }
 }
-function onJoined(name, x, y) {
+function onJoined(name, x, y, others) {
     ex.Logger.getInstance().info("Joined", x, y);
     if (player) {
         player.connectionId = hub.connection.id;
@@ -58,6 +58,7 @@ function onJoined(name, x, y) {
     players[player.connectionId] = player;
     game.add(player);
     game.currentScene.camera.setActorToFollow(player);
+    onSynch(others);
 }
 function onOtherJoined(id, name, x, y) {
     ex.Logger.getInstance().info("Other player joined", id, name, x, y);

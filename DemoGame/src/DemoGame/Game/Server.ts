@@ -56,7 +56,7 @@ function onSynch(sp: IServerPlayer[]) {
     }
 }
 
-function onJoined(name: string, x: number, y: number) {
+function onJoined(name: string, x: number, y: number, others: IServerPlayer[]) {
     ex.Logger.getInstance().info("Joined", x, y);
 
     if (player) {
@@ -69,6 +69,8 @@ function onJoined(name: string, x: number, y: number) {
 
     game.add(player);
     game.currentScene.camera.setActorToFollow(player);
+
+    onSynch(others);
 }
 
 function onOtherJoined(id: string, name: string, x: number, y: number) {
