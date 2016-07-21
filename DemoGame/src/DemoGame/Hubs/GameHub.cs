@@ -45,7 +45,6 @@ namespace DemoGame.Hubs
                 p.Y = spawn.Y;
 
                 Clients.Caller.joined(name, spawn.X, spawn.Y);
-                Clients.All.otherJoined(id, name, spawn.X, spawn.Y);
 
                 Synchronize();
             }
