@@ -3,12 +3,12 @@
 /// <reference path="Server.ts"/>
 
 var player: MainPlayer;
-var name: string = "Kamranicus";
 var players: { [key: string]: Player } = {};
 
 var game = new ex.Engine({
     canvasElementId: 'game',
-    displayMode: ex.DisplayMode.FullScreen    
+    displayMode: ex.DisplayMode.FullScreen,
+    pointerScope: ex.Input.PointerScope.Canvas
 });
 
 game.backgroundColor = Config.background;

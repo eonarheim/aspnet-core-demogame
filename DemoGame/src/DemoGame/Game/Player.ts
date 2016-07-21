@@ -15,4 +15,22 @@
 }
 
 class MainPlayer extends Player {
+
+    public update(engine: ex.Engine, delta: number) {
+        super.update(engine, delta);
+
+        if (engine.input.keyboard.wasReleased(ex.Input.Keys.Up)) {
+            hub.server.moveUp();
+        }
+        if (engine.input.keyboard.wasReleased(ex.Input.Keys.Down)) {
+            hub.server.moveDown();
+        }
+        if (engine.input.keyboard.wasReleased(ex.Input.Keys.Left)) {
+            hub.server.moveLeft();
+        }
+        if (engine.input.keyboard.wasReleased(ex.Input.Keys.Right)) {
+            hub.server.moveRight();
+        }
+    }
+
 }

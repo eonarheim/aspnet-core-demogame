@@ -2,18 +2,61 @@
     game: SignalR.Hub.Proxy;
 }
 
+interface IServerPlayer {
+    Id: string;
+    Name: string;
+    X: number;
+    Y: number;
+}
+
 var hub = $.connection.game;
 
 function connectToServer() {
     return $.connection.hub.start(() => {
-        ex.Logger.getInstance().info("Connected to server", hub.connection.id);
-
-        // request to join game
-        hub.server.join(name);
+        ex.Logger.getInstance().info("Connected to server", hub.connection.id);        
     });
 }
 
-function onJoined(x: number, y: number) {
+function joinGame(name: string) {
+
+    // request to join game
+    hub.server.join(name);
+}
+
+function onSynch(sp: IServerPlayer[]) {
+    var synced: string[] = [];
+
+    // ensure players are synchronized
+
+    for (var p of sp) {
+        synced.push(p.Id);
+
+        if (!players[p.Id]) {
+            // spawn player
+            onOtherJoined(p.Id, p.Name, p.X, p.Y);
+        }
+
+        players[p.Id].easeTo(p.X, p.Y, 150, ex.EasingFunctions.EaseInOutCubic);
+    }
+
+    // remove disconnected players
+
+    var disconnected: string[] = [];
+
+    for (var pid in players) {
+        if (players.hasOwnProperty(pid)) {
+            if (synced.indexOf(pid) === -1) {
+                disconnected.push(pid);
+            }
+        }
+    }
+
+    for (var pid of disconnected) {
+        onLeave(pid);
+    }
+}
+
+function onJoined(name: string, x: number, y: number) {
     ex.Logger.getInstance().info("Joined", x, y);
 
     if (player) {
@@ -41,6 +84,20 @@ function onOtherJoined(id: string, name: string, x: number, y: number) {
     game.add(op);
 }
 
+function onLeave(id: string) {
+    ex.Logger.getInstance().info("Player disconnected", id);
+
+    if (!players[id]) return;
+
+    var p = players[id];
+
+    game.remove(p);
+
+    delete players[id];
+}
+
 // methods server can invoke on client
 hub.client.joined = onJoined;
 hub.client.otherJoined = onOtherJoined;
+hub.client.leave = onLeave;
+hub.client.synch = onSynch;
