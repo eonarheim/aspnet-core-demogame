@@ -29,6 +29,11 @@ namespace DemoGame
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddSignalR(options =>
+            {
+                options.Hubs.EnableDetailedErrors = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +53,10 @@ namespace DemoGame
             }
 
             app.UseStaticFiles();
+
+            // SignalR
+            app.UseWebSockets();
+            app.UseSignalR();
 
             app.UseMvc(routes =>
             {

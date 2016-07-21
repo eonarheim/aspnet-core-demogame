@@ -1,0 +1,48 @@
+{
+  "name": "excalibur",
+  "version": "0.6.0",
+  "homepage": "https://github.com/excaliburjs/Excalibur",
+  "authors": [
+    "https://github.com/excaliburjs/Excalibur/graphs/contributors"
+  ],
+  "description": "Excalibur.js is a simple JavaScript game engine with TypeScript bindings for making 2D games in HTML5 Canvas. Our mission is to make web game development as simple as possible.",
+  "main": "dist/excalibur-0.6.0.js",
+  "keywords": [
+    "excalibur",
+    "game",
+    "engine",
+    "typescript",
+    "javascript",
+    "simple"
+  ],
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets",
+    "bin",
+    "Excalibur.Samples.Win8",
+    "particle-tester",
+    "sample-game",
+    "spec",
+    "tools",
+    "*.md",
+    "Gruntfile.js",
+    "package.json",
+    "*.csproj",
+    "*.sublime-*",
+    "*.sln",
+    "*.bat",
+    "*.nuspec"
+  ],
+  "_release": "0.6.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.6.0",
+    "commit": "d7be75f91ff453b96438fcd1967d7bbde5c9751d"
+  },
+  "_source": "https://github.com/excaliburjs/Excalibur.git",
+  "_target": "~0.6.0",
+  "_originalSource": "excalibur"
+}
