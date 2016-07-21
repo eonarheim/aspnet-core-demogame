@@ -27,20 +27,26 @@ namespace DemoGame
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var env = services.First(sd => sd.ServiceType == 
+                typeof(IHostingEnvironment)).ImplementationInstance as IHostingEnvironment;
+
             services.AddMvc();
 
             services.AddSignalR(options =>
             {
-                options.Hubs.EnableDetailedErrors = true;
+                options.Hubs.EnableDetailedErrors = env.IsDevelopment();
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
+            // Logging configuration
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            // Error handling configuration
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -51,12 +57,14 @@ namespace DemoGame
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            // Static file serving
             app.UseStaticFiles();
 
             // SignalR
             app.UseWebSockets();
             app.UseSignalR();
 
+            // MVC
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
