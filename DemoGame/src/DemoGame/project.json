@@ -55,7 +55,8 @@
       "wwwroot",
       "Views",
       "Areas/**/Views",
-      "appsettings.json",
+      // Include environment app settings (this wasn't the default!)
+      "appsettings*.json",
       "web.config"
     ]
   },

@@ -27,7 +27,7 @@ namespace DemoGame.Hubs
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = "Player" + Players.Count + 1;
+                name = "Player" + (Players.Count + 1);
             }
 
             var p = new Player()
