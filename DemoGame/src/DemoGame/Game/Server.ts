@@ -11,16 +11,24 @@ interface IServerPlayer {
 
 var hub = $.connection.game;
 
+// promise resolves when connected
+var connected = $.Deferred();
+
 function connectToServer() {
     return $.connection.hub.start({ transport: ['webSockets'] }, () => {
-        ex.Logger.getInstance().info("Connected to server", hub.connection.id);        
+        ex.Logger.getInstance().info("Connected to server", hub.connection.id);    
+
+        connected.resolve();
     });
 }
 
 function joinGame(name: string) {
 
-    // request to join game
-    hub.server.join(name);
+    // when connected
+    connected.then(() => {
+        // request to join game
+        hub.server.join(name);
+    });
 }
 
 function onSynch(sp: IServerPlayer[]) {

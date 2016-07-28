@@ -2,23 +2,29 @@
 
     $(function () {
 
-        // prompt for name
-        $("#name-modal").modal({
-            backdrop: 'static'
-        }).modal('show');
+        // read global app options injected in _Layout.cshtml
+        if (window.appOptions.enableCustomNames) {
+            // prompt for name
+            $("#name-modal").modal({
+                backdrop: 'static'
+            }).modal('show');
 
-        $("#join").on('click', function () {
-            
-            var name = $("#name").val();
+            $("#join").on('click', function () {
 
-            if (name.length > 0) {
-                // connect
-                joinGame(name);
+                var name = $("#name").val();
 
-                // dismiss
-                $("#name-modal").modal('hide');
-            }
-        });
+                if (name.length > 0) {
+                    // connect
+                    joinGame(name);
+
+                    // dismiss
+                    $("#name-modal").modal('hide');
+                }
+            });
+        } else {
+            // use server-generated names
+            joinGame();
+        }
     });
 
 })();

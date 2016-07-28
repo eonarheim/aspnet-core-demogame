@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@* Inject our strongly-typed options into the view *@
+@inject IOptions<AppOptions> options
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,6 +21,10 @@
 </head>
 <body>
     @RenderBody()
+
+    <script>
+        window.appOptions = @Html.ToJson(options.Value);
+    </script>
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

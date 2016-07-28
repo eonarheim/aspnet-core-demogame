@@ -46,6 +46,10 @@ namespace DemoGame
             // Register MVC services
             services.AddMvc();
 
+            // Add strongly-typed Options support
+            services.AddOptions();
+            services.Configure<AppOptions>(Configuration);
+
             // Register SignalR services
             services.AddSignalR(options =>
             {
@@ -68,7 +72,7 @@ namespace DemoGame
             //
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
+            
             //
             // Error handling configuration
             //

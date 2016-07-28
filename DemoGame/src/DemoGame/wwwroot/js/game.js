@@ -12,14 +12,20 @@ var Resources = {
     TxPlayer: new ex.Texture("images/dude.png")
 };
 var hub = $.connection.game;
+// promise resolves when connected
+var connected = $.Deferred();
 function connectToServer() {
     return $.connection.hub.start({ transport: ['webSockets'] }, function () {
         ex.Logger.getInstance().info("Connected to server", hub.connection.id);
+        connected.resolve();
     });
 }
 function joinGame(name) {
-    // request to join game
-    hub.server.join(name);
+    // when connected
+    connected.then(function () {
+        // request to join game
+        hub.server.join(name);
+    });
 }
 function onSynch(sp) {
     var synced = [];
