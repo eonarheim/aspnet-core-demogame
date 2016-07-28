@@ -1,6 +1,12 @@
 # ASP.NET Core Demo with SignalR
 
-This is a simple showcase of a trivial multiplayer game using SignalR.
+This is a simple showcase of a trivial multiplayer game using SignalR. It also showcases many of the new features of ASP.NET Core, including:+1:
+
+- Strongly-typed Options
+- Cascading configuration
+- Custom Tag Helpers
+- View dependency injection
+- Bundling/minifying
 
 Run the app:
 
