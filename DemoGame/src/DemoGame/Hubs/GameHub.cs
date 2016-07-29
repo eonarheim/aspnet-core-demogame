@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DemoGame.Models;
+using Microsoft.Extensions.Options;
+using DemoGame.Services;
 
 namespace DemoGame.Hubs
 {
@@ -18,21 +20,33 @@ namespace DemoGame.Hubs
 
         // don't do this
         private static readonly ConcurrentDictionary<string, Player> Players = new ConcurrentDictionary<string, Player>();
-        
+        private readonly AppOptions _options;
+
+        public GameHub(IOptions<AppOptions> options)
+        {
+            _options = options.Value;
+        }
+
         public void Join(string name)
         {
             var id = Context.ConnectionId;
 
             if (Players.ContainsKey(id)) return;
 
-            if (string.IsNullOrWhiteSpace(name))
+            // autogen names if custom names turned off or player didn't supply one
+            if (string.IsNullOrWhiteSpace(name) || !_options.EnableCustomNames)
             {
                 name = "Player" + (Players.Count + 1);
+            } else
+            {
+                // max length 25 chars
+                name = name.Substring(0, Math.Min(25, name.Length));
             }
 
             var p = new Player()
             {
                 Id = id,
+
                 Name = name
             };
 
@@ -120,8 +134,11 @@ namespace DemoGame.Hubs
 
         private Point GetSpawnPoint()
         {
-            // todo randomize
-            return new Point(MapSize / 2, MapSize / 2);
+            var r = new Random(DateTime.Now.Millisecond);
+            var rx = r.Next(0, MapSize);
+            var ry = r.Next(0, MapSize);
+
+            return new Point(rx, ry);
         }
     }
 }

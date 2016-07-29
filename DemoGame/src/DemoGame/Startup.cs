@@ -50,6 +50,8 @@ namespace DemoGame
             services.AddOptions();
             services.Configure<AppOptions>(Configuration);
 
+            // TODO: Add a custom service to inject
+
             // Register SignalR services
             services.AddSignalR(options =>
             {

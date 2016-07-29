@@ -10,13 +10,16 @@ interface IServerPlayer {
 }
 
 var hub = $.connection.game;
+var err = function (exc) {
+    ex.Logger.getInstance().error("Error calling server method", exc);
+};
 
 // promise resolves when connected
 var connected = $.Deferred();
 
 function connectToServer() {
     return $.connection.hub.start({ transport: ['webSockets'] }, () => {
-        ex.Logger.getInstance().info("Connected to server", hub.connection.id);    
+        ex.Logger.getInstance().info("Connected to server", hub.connection.id);
 
         connected.resolve();
     });
@@ -27,7 +30,7 @@ function joinGame(name: string) {
     // when connected
     connected.then(() => {
         // request to join game
-        hub.server.join(name);
+        hub.server.join(name).fail(err);
     });
 }
 

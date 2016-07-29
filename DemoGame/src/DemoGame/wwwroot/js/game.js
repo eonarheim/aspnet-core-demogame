@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Config = {
-    background: ex.Color.Azure,
+    background: ex.Color.fromHex("#49a269"),
     mapSize: 1600
 };
 var Resources = {
@@ -12,6 +12,9 @@ var Resources = {
     TxPlayer: new ex.Texture("images/dude.png")
 };
 var hub = $.connection.game;
+var err = function (exc) {
+    ex.Logger.getInstance().error("Error calling server method", exc);
+};
 // promise resolves when connected
 var connected = $.Deferred();
 function connectToServer() {
@@ -24,7 +27,7 @@ function joinGame(name) {
     // when connected
     connected.then(function () {
         // request to join game
-        hub.server.join(name);
+        hub.server.join(name).fail(err);
     });
 }
 function onSynch(sp) {
@@ -102,10 +105,15 @@ var loader = new ex.Loader();
 for (var r in Resources) {
     loader.addResource(Resources[r]);
 }
+// center camera on map
+game.currentScene.camera = new ex.LockedCamera();
+game.currentScene.camera.x = Config.mapSize;
+game.currentScene.camera.y = Config.mapSize;
 game.start(loader).then(function () {
+    // join game
     connectToServer();
-    game.currentScene.camera = new ex.LockedCamera();
-    var map = new ex.Actor(0, 0, game.getWidth(), game.getHeight());
+    // add map
+    var map = new ex.Actor(0, 0, Config.mapSize, Config.mapSize);
     map.anchor.setTo(0, 0);
     map.addDrawing(Resources.TxMap);
     map.setCenterDrawing(false);
@@ -120,6 +128,7 @@ var Player = (function (_super) {
     }
     Player.prototype.onInitialize = function (engine) {
         _super.prototype.onInitialize.call(this, engine);
+        this.scale.setTo(1.5, 1.5);
         this.addDrawing(Resources.TxPlayer);
         var nameLabel = new ex.Label(this.name, 0, -20, "Arial");
         nameLabel.textAlign = ex.TextAlign.Center;

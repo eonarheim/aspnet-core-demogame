@@ -19,13 +19,18 @@ for (var r in Resources) {
     loader.addResource(Resources[r]);
 }
 
+// center camera on map
+game.currentScene.camera = new ex.LockedCamera();
+game.currentScene.camera.x = Config.mapSize;
+game.currentScene.camera.y = Config.mapSize;
+
 game.start(loader).then(() => {
 
+    // join game
     connectToServer();
 
-    game.currentScene.camera = new ex.LockedCamera();
-
-    var map = new ex.Actor(0, 0, game.getWidth(), game.getHeight());
+    // add map
+    var map = new ex.Actor(0, 0, Config.mapSize, Config.mapSize);
     map.anchor.setTo(0, 0);
     map.addDrawing(Resources.TxMap);
     map.setCenterDrawing(false);
