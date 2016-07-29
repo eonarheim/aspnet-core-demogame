@@ -1,12 +1,15 @@
 # ASP.NET Core Demo with SignalR
 
-This is a simple showcase of a trivial multiplayer game using SignalR. It also showcases many of the new features of ASP.NET Core, including:+1:
+This is a simple showcase of a trivial multiplayer game using SignalR. It also showcases many of the new features of ASP.NET Core, including:
 
 - Strongly-typed Options
 - Cascading configuration
 - Custom Tag Helpers
 - View dependency injection
 - Bundling/minifying
+- Injected Filters
+
+:100:
 
 Run the app:
 
@@ -14,6 +17,8 @@ Run the app:
 dotnet restore
 dotnet run
 ```
+
+To play the game, just move arrows. In non-development environment, it will autogen player names.
 
 In Visual Studio it will run under IIS Express. You can also publish it to Azure to test it out 
 (be sure to enable Web Sockets in Azure, probably will need S1 or above).

@@ -6,6 +6,7 @@
     public onInitialize(engine: ex.Engine) {
         super.onInitialize(engine);
 
+        this.scale.setTo(1.5, 1.5);
         this.addDrawing(Resources.TxPlayer);
 
         var nameLabel = new ex.Label(this.name, 0, -20, "Arial");
