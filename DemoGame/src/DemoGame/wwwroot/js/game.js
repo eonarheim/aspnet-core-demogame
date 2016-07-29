@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Config = {
-    background: ex.Color.Azure,
+    background: ex.Color.fromHex("#49a269"),
     mapSize: 1600
 };
 var Resources = {
