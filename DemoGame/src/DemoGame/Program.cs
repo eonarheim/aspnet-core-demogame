@@ -16,7 +16,8 @@ namespace DemoGame
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseUrls("http://0.0.0.0:5000")
+                // This might be needed for Linux but messes with IIS express
+                //.UseUrls("http://0.0.0.0:5000")
                 .Build();
 
             host.Run();
